@@ -7,7 +7,11 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-
+//Registration route
 Route::post('/register', [UserController::class, 'register']);
 
-Route::post('/', [UserController::class, 'logout']);
+//Logout route
+Route::post('/logout', [UserController::class, 'logout']);
+
+//Login route
+Route::post('/login', [UserController::class,'login']);

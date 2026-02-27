@@ -8,8 +8,29 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    //
-    public function register(Request $request) {
+    //Login function
+    public function login(Request $request)
+    {
+        $incomingFields = $request->validate([
+            'loginemail' => ['required', 'email'],
+            'loginpassword' => ['required', 'min:8', 'max:16']
+        ]);
+        if (auth()->attempt(['email' => $incomingFields['loginemail'], 'password' => $incomingFields['loginpassword']])) {
+            $request->session()->regenerate();
+        }
+        return redirect('/'); // If login fails, redirect to homepage
+    }
+
+    //Logout function
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/');
+    }
+
+    //Registration function
+    public function register(Request $request)
+    {
         $incomingFields = $request->validate([
             'name' => ['required', 'max:30', Rule::unique('users', 'name')],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
