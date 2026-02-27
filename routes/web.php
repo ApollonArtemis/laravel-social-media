@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\Post;    
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;  
 use App\Http\Controllers\PostController;      
 
 Route::get('/', function () {
-    return view('homepage');
+    // $posts = Post::all(); - Show all posts from all users
+    $posts = Post::where('user_id', auth()->id())->get();
+    return view('homepage', ['posts' => $posts]);
 });
 
 //Registration route

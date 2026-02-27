@@ -110,7 +110,7 @@
                 <button>Log Out</button>
             </form>
         </div>
-        <div>
+        <div class="border border-primary">
             <h2>Create a new post</h2>
             <form action="/create-post" method="POST">
                 @csrf
@@ -118,6 +118,15 @@
                 <textarea name="body" placeholder="Body Content..."></textarea>
                 <button>Post</button>
             </form>
+        </div>
+        <div class="border border-primary bg-tertiary">
+            <h2>All Posts</h2>
+            @foreach ($posts as $post)
+                <div class="border border-secondary my-2 p-2">
+                    <h3>{{$post['title']}}</h3>
+                    <p>{{$post['body']}}</p>
+                </div>
+            @endforeach
         </div>
     @else
         <div class="d-flex justify-content-center py-5">
