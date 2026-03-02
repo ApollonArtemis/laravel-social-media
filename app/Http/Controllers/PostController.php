@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    //Delete post function
+    public function deletePost(Post $post)
+    {
+        if ((int) $post->user_id === (int) auth()->id()) {
+            $post->delete();
+        }
+        
+        return redirect('/');
+    }
+
     //Update post function
     public function updatePost(Post $post, Request $request)
     {
-        if (auth()->user()->id !== $post['user_id']) {
+        if ((int) $post->user_id !== (int) auth()->id()) {
             return redirect('/');
         }
         $incomingFields = $request->validate([
@@ -28,10 +38,12 @@ class PostController extends Controller
     //Edit post function
     public function editPost(Post $post)
     {
-        // if (auth()->user()->id !== $post['user_id']) {
-        //     return redirect('/');
-        // } else
-            return view('edit-post', ['post' => $post]);
+        // dd(auth()->check(), auth()->id(), $post->user_id);
+        if ((int) $post->user_id !== (int) auth()->id()) {
+            return redirect('/');
+        }
+        return view('edit-post', ['post' => $post]);
+
     }
     //Create post function
     public function createPost(Request $request)

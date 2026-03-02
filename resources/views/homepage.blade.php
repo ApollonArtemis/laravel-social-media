@@ -124,7 +124,7 @@
             <h2>All Posts</h2>
             @foreach ($posts as $post)
                 <div class="border border-secondary my-2 p-2">
-                    <h3>{{$post['title']}}</h3>
+                    <h3>{{$post['title']}} by {{ $post->user->name }}</h3>
                     <p>{{$post['body']}}</p>
                     <p><a href="/edit-post/{{ $post['id'] }}">Edit</a></p>
                     <form action="/delete-post/{{ $post['id'] }}" method="POST">
